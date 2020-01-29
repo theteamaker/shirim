@@ -35,7 +35,7 @@ class Configuration(commands.Cog):
         
         elif check == 200:
             try:
-                self.db.insert(dict(user_id=ctx.author.id, username=args[0]))
+                self.db.upsert(dict(user_id=ctx.author.id, username=args[0]), ["user_id"])
                 await ctx.send(f"Your last.fm username has been successfully set to `{args[0]}`!")
             except:
                 await ctx.send("Something went wrong! Feel free to submit an issue at https://github.com/theteamaker/shirim.")
