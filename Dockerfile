@@ -6,6 +6,8 @@ RUN ln -s /usr/include/locale.h /usr/include/xlocale.h
 COPY *.py /app/
 COPY requirements.txt /app/
 COPY .env.dist /app/.env
+
+RUN mkdir -p /app/commands
 COPY commands/ /app/commands/
 
 RUN mkdir /app/data

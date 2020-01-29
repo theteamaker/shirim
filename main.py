@@ -9,7 +9,7 @@ load_dotenv()
 TOKEN = os.getenv("TOKEN")
 DEFAULT_PREFIX = "."
 
-COGS = ['configuration', 'fm'] # upon adding a new file for a cog in the "commands" folder, add its file name here.
+COGS = ['ping'] # upon adding a new file for a cog in the "commands" folder, add its file name here.
 
 bot = commands.Bot(command_prefix=DEFAULT_PREFIX)
 
