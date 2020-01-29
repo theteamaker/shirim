@@ -1,8 +1,8 @@
 import requests, os, dataset, discord
 from discord.ext import commands
+from env import LASTFM_API_KEY, USERS_DB
 
-LASTFM_API_KEY = os.getenv("LASTFM_API_KEY")
-USERS_DB = dataset.connect(os.getenv("USERS_DB"))
+USERS_DB = dataset.connect(USERS_DB)
 db = USERS_DB["users"]
 
 class Scrobble:
