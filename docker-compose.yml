@@ -4,9 +4,9 @@ services:
   shirim:
     image: theteamaker/shirim
     environment:
-      - TOKEN = <secret>
-      - LASTFM_API_KEY = <secret>
-      - USERS_DB = sqlite:///data/database.db
+      - TOKEN = NjU5ODg1MDg2NzA3Mjg2MDE3.XjD7Rg.0pfiqLtXnjoJ1QeuHqjCZU1iHJQ
+      - LASTFM_API_KEY = 0f9045f98900ac6723f98dd937e1422f
+      - USERS_DB = sqlite:///users.db
     volumes:
       - shirim_data:/app/data
     
