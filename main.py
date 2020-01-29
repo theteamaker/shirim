@@ -3,7 +3,7 @@ from discord.ext import commands
 from dotenv import load_dotenv
 
 ### Loading Environment Variables. ###
-# Plans to add custom server-specific prefixes are in the works.
+## plans to add custom server-specific prefixes are in the works.
 
 load_dotenv()
 TOKEN = os.getenv("TOKEN")
