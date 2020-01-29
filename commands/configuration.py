@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 USERS_DB = os.getenv("USERS_DB")
+LASTFM_API_KEY = os.getenv("LASTFM_API_KEY")
 
 def setup(bot):
     bot.add_cog(Configuration(bot))
@@ -30,7 +31,7 @@ class Configuration(commands.Cog):
         
         # Check if a user exists on last.fm. We'll use status codes for this; don't want any dud usernames being added.
 
-        user_check = requests.get(f"http://www.last.fm/user/{args[0]}").status_code
+        user_check = requests.get(f"http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user={args[0]}&api_key={LASTFM_API_KEY}&format=json").status_code
 
         if user_check == 404:
             await ctx.send("*Error: That user doesn't seem to exist. Perhaps you've mistyped your username?*")
