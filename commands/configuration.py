@@ -42,4 +42,4 @@ class Configuration(commands.Cog):
                 self.db.insert(dict(user_id=ctx.author.id, username=args[0]))
                 await ctx.send(f"Your last.fm username has been successfully set to `{args[0]}`!")
             except:
-                await ctx.send("Something went wrong! Feel free to submit an issue at https://github.com/theteamaker/bladee.")
+                await ctx.send("Something went wrong! Feel free to submit an issue at https://github.com/theteamaker/shirim.")
