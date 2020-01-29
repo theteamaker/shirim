@@ -70,7 +70,6 @@ class FM(commands.Cog):
         except Exception as e:
             await ctx.send("**Huh!** You haven't seemed to have scrobbled anything yet!")
             raise e
-            return
 
         embed.set_author(
             name=scrobbles.user,
@@ -87,7 +86,6 @@ class FM(commands.Cog):
             )
         except Exception as e:
             raise e
-            pass
 
         return embed
 
@@ -116,7 +114,7 @@ class FM(commands.Cog):
         
         if re.search("^<@![0-9]*>$", args[0]) is not None: # checking if the user entered something that looks like a mention. honestly i have no idea how to use regex
             user_id = ""
-            for i in re.findall("\d", args[0]):
+            for i in re.findall(r"\d", args[0]):
                 user_id += i
             
             user = db.find_one(user_id=int(user_id))
