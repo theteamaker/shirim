@@ -6,7 +6,7 @@ services:
     environment:
       - TOKEN=<secret>
       - LASTFM_API_KEY=<secret>
-      - SQL_DATABASE=sqlite:///users.db
+      - USERS_DB=sqlite:///users.db
     volumes:
       - shirim_data:/app/data
     

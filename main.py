@@ -1,12 +1,8 @@
 import discord, os, dataset
 from discord.ext import commands
 from dotenv import load_dotenv
+from env import TOKEN
 
-### Loading Environment Variables. ###
-## plans to add custom server-specific prefixes are in the works.
-
-load_dotenv()
-TOKEN = os.getenv("TOKEN")
 DEFAULT_PREFIX = "."
 
 COGS = ['configuration', 'fm'] # upon adding a new file for a cog in the "commands" folder, add its file name here.

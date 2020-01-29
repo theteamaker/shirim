@@ -2,3 +2,4 @@
 venv/
 .env
 commands/__pycache__
+__pycache__/

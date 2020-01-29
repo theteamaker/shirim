@@ -1,8 +1,6 @@
 import dataset, requests, os
 from discord.ext import commands
-
-USERS_DB = os.getenv("USERS_DB")
-LASTFM_API_KEY = os.getenv("LASTFM_API_KEY")
+from env import USERS_DB, LASTFM_API_KEY
 
 def setup(bot):
     bot.add_cog(Configuration(bot))
