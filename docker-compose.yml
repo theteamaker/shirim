@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  shirim:
+    image: theteamaker/shirim
+    environment:
+      - TOKEN = <secret>
+      - LASTFM_API_KEY = <secret>
+      - USERS_DB = sqlite:///data/database.db
+    volumes:
+      - shirim_data:/app/data
+    
+volumes:
+  shirim_data:
+    external: true
