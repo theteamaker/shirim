@@ -136,7 +136,7 @@ class FM(commands.Cog):
         check = user_check(args[0])
 
         if check == 404:
-            await ctx.send("**Error:** The last.fm you specified doesn't seem to exist.")
+            await ctx.send("**Error:** The last.fm user you specified doesn't seem to exist.")
         
         elif check == 200:
             scrobbles = Scrobbles(username=args[0])
