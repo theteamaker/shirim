@@ -1,8 +1,5 @@
 import dataset, requests, os
 from discord.ext import commands
-from dotenv import load_dotenv
-
-load_dotenv()
 
 USERS_DB = os.getenv("USERS_DB")
 LASTFM_API_KEY = os.getenv("LASTFM_API_KEY")
