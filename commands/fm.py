@@ -106,7 +106,7 @@ class FM(commands.Cog):
     @commands.command()
     async def get(self, ctx, *args):
         await ctx.trigger_typing()
-        usage = "usage: `set <username>`"
+        usage = "usage: `get <username/mention>`"
 
         if len(args) == 0:
             await ctx.send(usage)
