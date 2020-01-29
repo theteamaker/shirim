@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 LASTFM_API_KEY = os.getenv("LASTFM_API_KEY")
-DEFAULT_PREFIX = os.getenv("DEFAULT_PREFIX")
 USERS_DB = dataset.connect(os.getenv("USERS_DB"))
 db = USERS_DB["users"]
 
@@ -58,7 +57,7 @@ class FM(commands.Cog):
         user = db.find_one(user_id=ctx.author.id)
         
         if user is None:
-            await ctx.send(f"*You haven't set a last.fm username yet! Use {DEFAULT_PREFIX}set to set your username.*")
+            await ctx.send(f"*You haven't set a last.fm username yet! Use the `set` command to set your username.*")
             return
 
         scrobbles = Scrobbles(username=user["username"])

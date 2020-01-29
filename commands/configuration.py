@@ -4,6 +4,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+USERS_DB = os.getenv("USERS_DB")
+
 def setup(bot):
     bot.add_cog(Configuration(bot))
 
@@ -11,8 +13,8 @@ class Configuration(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
-        USERS_DB = dataset.connect(os.getenv("USERS_DB"))
-        self.db = USERS_DB["users"]
+        DATABASE = dataset.connect(USERS_DB)
+        self.db = DATABASE["users"]
 
     def is_guild_owner(ctx): # useful for configuration commands.
         return ctx.message.author.id == ctx.guild.owner.id

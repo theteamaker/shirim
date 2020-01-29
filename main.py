@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 TOKEN = os.getenv("TOKEN")
-DEFAULT_PREFIX = os.getenv("DEFAULT_PREFIX")
+DEFAULT_PREFIX = "."
 
 COGS = ['configuration', 'fm'] # upon adding a new file for a cog in the "commands" folder, add its file name here.
 

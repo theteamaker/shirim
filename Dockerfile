@@ -4,9 +4,9 @@ RUN apk add --no-cache python3-dev libstdc++ g++
 RUN ln -s /usr/include/locale.h /usr/include/xlocale.h
 
 COPY *.py /app/
-COPY commands/ /app/commands/
 COPY requirements.txt /app/
 COPY .env.dist /app/.env
+COPY commands/ /app/commands/
 
 RUN mkdir /app/data
 
