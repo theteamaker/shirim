@@ -44,7 +44,7 @@ class Get(commands.Cog):
                     
                     if len(args) >= 3:
                         if args[2] == '-nc':
-                            captions = True
+                            captions = False
                         
                         elif args[2] in appropriate_sizes:
                             chart_size = args[2]
