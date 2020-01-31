@@ -28,7 +28,7 @@ _optional arguments:_ <chart type (e.g. weekly, monthly)> <chart size> <-nc> (__
 
 This bot is Docker compatible, and is how my instance runs -- however, it can be built and ran outside of Docker.
 
-_**Requirements**_
+**Requirements**
 
 * All packages specified in requirements.txt (discord.py, matplotlib, etc.) (use `pip install -r requirements.txt`).
 * 2 SQL Databases. One for user settings, and one for server settings.
