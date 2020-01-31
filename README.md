@@ -12,11 +12,11 @@ To invite the bot to your server, click [here](https://discordapp.com/api/oauth2
 
 **weekly, monthly, 3months, 6months, yearly, alltime**: these commands fetch your top albums in a given timeframe. has optional arguments as well. (__example:__ ::weekly 3x3 -nc)
 
-__optional arguments:__ <chart size: 3x3, 4x4, 5x5, 2x6> <-nc> (-nc generates a chart without captions over the album covers)
+_optional arguments:_ <chart size: 3x3, 4x4, 5x5, 2x6> <-nc> (-nc generates a chart without captions over the album covers)
 
 **get**: fetches someone else's data. has optional arguments. (__example:__ ::get <username/discord mention>)
 
-__optional arguments:__ <chart type (e.g. weekly, monthly)> <chart size> <-nc> (__example:__ ::get evatwin weekly 4x4 -nc)
+_optional arguments:_ <chart type (e.g. weekly, monthly)> <chart size> <-nc> (__example:__ ::get evatwin weekly 4x4 -nc)
 
 **taste**: compares your listening habits to another person's. (__example:__ ::taste <username/discord mention>)
 
@@ -28,7 +28,7 @@ __optional arguments:__ <chart type (e.g. weekly, monthly)> <chart size> <-nc> (
 
 This bot is Docker compatible, and is how my instance runs -- however, it can be built and ran outside of Docker.
 
-__**Requirements**__
+_**Requirements**_
 
 * All packages specified in requirements.txt (discord.py, matplotlib, etc.) (use `pip install -r requirements.txt`).
 * 2 SQL Databases. One for user settings, and one for server settings.
