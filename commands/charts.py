@@ -65,9 +65,11 @@ async def parse(context, chart_type, usage, *args, get=False):
         await context.send(f"**Error:** You haven't set a last.fm username yet! Use the `set` command to set your username.")
         return
     
+    message_content = context.message.author.mention
+
     try:
         chart = await get_chart(user["username"], chart_type, size, nc=captions)
-        await context.send(file=discord.File(fp=chart,filename="chart.png"))
+        await context.send(content=message_content, file=discord.File(fp=chart,filename="chart.png"))
     except Exception as e:
         await context.send(general_error)
         raise e

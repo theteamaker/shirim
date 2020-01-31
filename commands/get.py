@@ -54,7 +54,7 @@ class Get(commands.Cog):
                                     captions = False
                         
                     chart = await get_chart(username, chart_type, size=chart_size, nc=captions)
-                    await ctx.send(file=discord.File(fp=chart,filename="chart.png"))
+                    await ctx.send(content=ctx.message.author.mention, file=discord.File(fp=chart,filename="chart.png"))
                     return
             
             scrobbles = Scrobbles(username=username)
