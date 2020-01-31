@@ -1,17 +1,17 @@
-FROM python:3-alpine
-
-RUN apk add --no-cache python3-dev libstdc++ g++
-RUN ln -s /usr/include/locale.h /usr/include/xlocale.h
+FROM python:3
 
 COPY *.py /app/
 COPY requirements.txt /app/
 COPY .env.dist /app/.env
+
+RUN mkdir -p /app/commands
 COPY commands/ /app/commands/
 
 RUN mkdir /app/data
 
 WORKDIR /app
-RUN pip install -r requirements.txt
-RUN apk del python3-dev libstdc++ g++
+
+RUN pip3 install --upgrade pip
+RUN pip3 install --default-timeout=100 -r requirements.txt
 
 CMD python main.py

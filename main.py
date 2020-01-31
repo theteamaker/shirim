@@ -2,12 +2,11 @@ import discord, os, dataset
 from discord.ext import commands
 from dotenv import load_dotenv
 from env import TOKEN
+from commands.configuration import get_prefix
 
-DEFAULT_PREFIX = "."
+COGS = ['configuration', 'fm', 'taste', 'charts'] # upon adding a new file for a cog in the "commands" folder, add its file name here.
 
-COGS = ['configuration', 'fm'] # upon adding a new file for a cog in the "commands" folder, add its file name here.
-
-bot = commands.Bot(command_prefix=DEFAULT_PREFIX)
+bot = commands.Bot(command_prefix=get_prefix)
 
 for cog in COGS:
     bot.load_extension(f"commands.{cog}")

@@ -4,3 +4,4 @@ venv/
 commands/__pycache__
 __pycache__/
 users.db
+servers.db
