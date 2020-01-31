@@ -53,7 +53,7 @@ class Get(commands.Cog):
                                 if args[3] == "-nc":
                                     captions = False
                         
-                    chart = await get_chart(username, args[1], size=chart_size, nc=captions)
+                    chart = await get_chart(username, chart_type, size=chart_size, nc=captions)
                     await ctx.send(file=discord.File(fp=chart,filename="chart.png"))
                     return
             
