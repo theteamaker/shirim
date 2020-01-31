@@ -1,7 +1,7 @@
 import requests, os, dataset, discord, re
 from discord.ext import commands
 from env import LASTFM_API_KEY, USERS_DB
-from commands.configuration import user_check
+from commands.configuration import user_check, return_fm
 
 USERS_DB = dataset.connect(USERS_DB)
 db = USERS_DB["users"]
@@ -20,10 +20,10 @@ class Scrobbles:
         self.limit = limit
 
         # Parameters/settings for the JSON link we'll use to grab data.
-        headers = {"User-Agent": "echo-skiffskiffles"}
+        headers = {"User-Agent": "shirim-skiffskiffles"}
 
         query_params = {
-            "method": "user.getrecenttracks",
+            "method": "user.getRecentTracks",
             "api_key": LASTFM_API_KEY,
             "limit": self.limit,
             "user": self.username,
@@ -112,36 +112,20 @@ class FM(commands.Cog):
             await ctx.send(usage)
             return
         
-        if re.search("^<@![0-9]*>$", args[0]) is not None: # checking if the user entered something that looks like a mention. honestly i have no idea how to use regex
-            user_id = ""
-            for i in re.findall(r"\d", args[0]):
-                user_id += i
-            
-            user = db.find_one(user_id=int(user_id))
+        username = return_fm(args[0])
 
-            if user is None:
-                await ctx.send("**Error:** The user you specified hasn't set their last.fm account.")
-                return
-            
-            scrobbles = Scrobbles(username=user["username"])
-            embed = await self.embedify(scrobbles, ctx)
-
-            await ctx.send(embed=embed)
+        if username == 404:
+            await ctx.send("**Error:** That user doesn't seem to exist. Perhaps you've mistyped their username?")
             return
-
-        ### Here, we'll do a case in which the person specified a last.fm username instead of mentioning a Discord user.
-
-        check = user_check(args[0])
-
-        if check == 404:
-            await ctx.send("**Error:** The last.fm user you specified doesn't seem to exist.")
         
-        elif check == 200:
-            scrobbles = Scrobbles(username=args[0])
-            embed = await self.embedify(scrobbles, ctx)
+        elif username == 678:
+            await ctx.send(f"**Error:** That user doesn't seem to have set their last.fm username yet.")
 
-            await ctx.send(embed=embed)
-            return
+        scrobbles = Scrobbles(username=username)
+        embed = await self.embedify(scrobbles, ctx)
+
+        await ctx.send(embed=embed)
+        return
 
 def setup(bot):
     bot.add_cog(FM(bot))
