@@ -17,7 +17,7 @@ class Get(commands.Cog):
     @commands.command()
     async def get(self, ctx, *args):
         await ctx.trigger_typing()
-        usage = "usage: `get <username/mention>`"
+        usage = "usage: `get <username/mention> <optional: chart_type chart_size -nc (no captions)>`"
 
         if len(args) == 0:
             await ctx.send(usage)
