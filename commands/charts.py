@@ -67,7 +67,7 @@ async def parse(context, chart_type, usage, *args, get=False):
     
     try:
         chart = await get_chart(user["username"], chart_type, size, nc=captions)
-        await context.send(file=discord.File(fp=chart,filename="weekly.png"))
+        await context.send(file=discord.File(fp=chart,filename="chart.png"))
     except Exception as e:
         await context.send(general_error)
         raise e
