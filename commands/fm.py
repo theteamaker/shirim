@@ -3,8 +3,7 @@ from discord.ext import commands
 from env import LASTFM_API_KEY, USERS_DB
 from commands.configuration import user_check, return_fm
 
-USERS_DB = dataset.connect(USERS_DB)
-db = USERS_DB["users"]
+users_db = dataset.connect(USERS_DB)["users"]
 
 class Scrobble:
     def __init__(self, scrobble):
@@ -92,7 +91,7 @@ class FM(commands.Cog):
     @commands.command()
     async def fm(self, ctx):
         await ctx.trigger_typing()
-        user = db.find_one(user_id=ctx.author.id)
+        user = users_db.find_one(user_id=ctx.author.id)
         
         if user is None:
             await ctx.send(f"**Error:** You haven't set a last.fm username yet! Use the `set` command to set your username.")
