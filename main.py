@@ -5,7 +5,7 @@ from env import TOKEN
 
 DEFAULT_PREFIX = "."
 
-COGS = ['ping'] # upon adding a new file for a cog in the "commands" folder, add its file name here.
+COGS = ['configuration', 'fm', 'taste'] # upon adding a new file for a cog in the "commands" folder, add its file name here.
 
 bot = commands.Bot(command_prefix=DEFAULT_PREFIX)
 
