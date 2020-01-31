@@ -1,7 +1,9 @@
 # Shirim - Eva Twin's Patrician Bot
 
 A bot designed to output last.fm data. Designed with a non-committal minimalist philosophy.
+
 Much of this bot's frontend is based off of [Amb1tion's Patrician-Bot](https://github.com/Amb1tion/Patrician-Bot), with a new backend and more consistent ways to fetch data.
+
 To invite the bot to your server, click [here](https://discordapp.com/api/oauth2/authorize?client_id=659885086707286017&permissions=0&scope=bot).
 
 # General Commands
