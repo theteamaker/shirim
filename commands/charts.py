@@ -31,7 +31,10 @@ async def get_chart(username, chart_type, size="3x3", nc=False):
         "type": selected_type
     }
 
-    link = f"http://tapmusic.net/collage.php?user={headers['user']}&type={headers['type']}&size={headers['size']}&caption=true"
+    link = f"http://tapmusic.net/collage.php?user={headers['user']}&type={headers['type']}&size={headers['size']}"
+
+    if nc == True:
+        link += "&caption=true"
 
     async with aiohttp.ClientSession() as session:
         async with session.get(link) as resp:
@@ -47,10 +50,17 @@ class Chart(commands.Cog):
 
         size = "3x3" # 3x3 by default
         appropriate_sizes = ["3x3", "4x4", "5x5", "2x6"]
-
+        captions = True
+    
         if len(args) >= 1:
             if args[0] in appropriate_sizes:
                 size = args[0]
+                if args[1] == "-nc":
+                    captions = False
+
+            elif args[0] == "-nc": # no captions flag
+                captions = False
+            
             else:
                 pass
         
@@ -60,7 +70,7 @@ class Chart(commands.Cog):
             return
         
         try:
-            chart = await get_chart(user["username"], chart_type, size)
+            chart = await get_chart(user["username"], chart_type, size, nc=captions)
             await context.send(file=discord.File(fp=chart,filename="weekly.png"))
         except Exception as e:
             await context.send(general_error)
