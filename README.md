@@ -8,24 +8,27 @@ To **invite** the bot to your server, click [here](https://discordapp.com/api/oa
 
 # General Commands
 
-**set**: sets your last.fm username (__example:__ ::set skiffskiffles)
+**set**: sets your last.fm username (__example:__ !set skiffskiffles)
 
-**fm**: fetches your most recent last.fm scrobble. (__example:__ ::fm)
+**fm**: fetches your most recent last.fm scrobble. (__example:__ !fm)
 
-**weekly, monthly, 3months, 6months, yearly, alltime**: these commands fetch your top albums in a given timeframe. has optional arguments as well. (__example:__ ::weekly 3x3 -nc)
+**weekly, monthly, 3months, 6months, yearly, alltime**: these commands fetch your top albums in a given timeframe. has optional arguments as well. (__example:__ !weekly 3x3 -nc)
 
 _optional arguments:_ <chart size: 3x3, 4x4, 5x5, 2x6> <-nc> (-nc generates a chart without captions over the album covers)
 
-**get**: fetches someone else's data. has optional arguments. (__example:__ ::get <username/discord mention>)
+**get**: fetches someone else's data. has optional arguments. (__example:__ !get <username/discord mention>)
 
-_optional arguments:_ <chart type (e.g. weekly, monthly)> <chart size> <-nc> (__example:__ ::get evatwin weekly 4x4 -nc)
+_optional arguments:_ <chart type (e.g. weekly, monthly)> <chart size> <-nc> (__example:__ !get evatwin weekly 4x4 -nc)
 
-**taste**: compares your listening habits to another person's. (__example:__ ::taste <username/discord mention>)
+**taste**: compares your listening habits to another person's. (__example:__ !taste <username/discord mention>)
 
 # Configuration
 
-**set_prefix**: can only be used by the server owner. sets a custom prefix for the server.
+**set_prefix**: can only be used by the server owner. sets a custom prefix for the server. (__example:__ !set_prefix $)
 
+**set_reactions**: can only be used by the server owner. determines whether up/down reactions are put on fm's, like Patrician-Bot does. (__example:__ !set_reactions on)
+
+**set_reactions**
 # Running the Bot
 
 This bot is Docker compatible, and is how my instance runs -- however, it can be built and ran outside of Docker.
