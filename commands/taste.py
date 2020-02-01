@@ -3,10 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from discord.ext import commands
 from io import BytesIO
-from commands.configuration import return_fm
+from commands.configuration import return_fm, users_db
 from env import USERS_DB, LASTFM_API_KEY
-
-db = dataset.connect(USERS_DB)["users"]
 
 class CommonArtists:
     def __init__(self, user1, user2):
@@ -104,7 +102,7 @@ class Taste(commands.Cog):
     async def taste(self, ctx, *args):
         await ctx.trigger_typing()
         usage = "usage: `taste <username/mention>`"
-        user = db.find_one(user_id=ctx.author.id)
+        user = users_db.find_one(user_id=ctx.author.id)
 
         if len(args) == 0: # all the cute little checks to make sure everyone exists and is hangin' tight
             await ctx.send(usage)
