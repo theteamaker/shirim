@@ -101,3 +101,31 @@ class Configuration(commands.Cog):
             await ctx.send(f"The bot's prefix for this server has been successfully set to `{args[0]}`!")
         except:
             await ctx.send(general_error)
+    
+    @commands.command()
+    @commands.check(is_guild_owner())
+    async def reactions(self, ctx, *args):
+        await ctx.trigger_typing()
+        usage = "usage: `reactions on|off`"
+
+        if len(args) == 0:
+            await ctx.send(usage)
+            return
+        
+        if args[0] != "on" and args[0] != "off":
+            await ctx.send(usage)
+            return
+        
+        if args[0] == "on":
+            try:
+                servers_db.upsert(dict(server_id=ctx.guild.id, reactions=True), ["server_id"])
+                await ctx.send("Reactions have now been turned on for this server.")
+            except:
+                await ctx.send(general_error)
+
+        elif args[0] == "off":
+            try:
+                servers_db.upsert(dict(server_id=ctx.guild.id, reactions=False), ["server_id"])
+                await ctx.send("Reactions have now been turned off for this server.")
+            except:
+                await ctx.send(general_error)
