@@ -5,7 +5,7 @@ from env import USERS_DB, SERVERS_DB, LASTFM_API_KEY
 users_db = dataset.connect(USERS_DB)["users"]
 servers_db = dataset.connect(SERVERS_DB)["servers"]
 
-DEFAULT_PREFIX = "::"
+DEFAULT_PREFIX = "!"
 general_error = "Something went wrong! Feel free to submit an issue at https://github.com/theteamaker/shirim."
 
 def setup(bot):
@@ -104,9 +104,9 @@ class Configuration(commands.Cog):
     
     @commands.command()
     @commands.check(is_guild_owner())
-    async def reactions(self, ctx, *args):
+    async def set_reactions(self, ctx, *args):
         await ctx.trigger_typing()
-        usage = "usage: `reactions on|off`"
+        usage = "usage: `reactions on | off`"
 
         if len(args) == 0:
             await ctx.send(usage)
@@ -114,16 +114,15 @@ class Configuration(commands.Cog):
         
         if args[0] != "on" and args[0] != "off":
             await ctx.send(usage)
-            return
         
-        if args[0] == "on":
+        if args[0].lower() == "on":
             try:
                 servers_db.upsert(dict(server_id=ctx.guild.id, reactions=True), ["server_id"])
                 await ctx.send("Reactions have now been turned on for this server.")
             except:
                 await ctx.send(general_error)
-
-        elif args[0] == "off":
+        
+        if args[0].lower() == "off":
             try:
                 servers_db.upsert(dict(server_id=ctx.guild.id, reactions=False), ["server_id"])
                 await ctx.send("Reactions have now been turned off for this server.")

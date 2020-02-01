@@ -1,9 +1,7 @@
 import requests, aiohttp, io, discord, dataset
 from discord.ext import commands
-from commands.configuration import general_error
+from commands.configuration import general_error, users_db
 from env import USERS_DB
-
-users_db = dataset.connect(USERS_DB)["users"]
 
 def setup(bot):
     bot.add_cog(Chart(bot))

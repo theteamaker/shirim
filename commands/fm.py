@@ -1,10 +1,7 @@
 import requests, os, dataset, discord, re
 from discord.ext import commands
 from env import LASTFM_API_KEY, USERS_DB, SERVERS_DB
-from commands.configuration import user_check, return_fm
-
-users_db = dataset.connect(USERS_DB)["users"]
-servers_db = dataset.connect(SERVERS_DB)["servers"]
+from commands.configuration import user_check, return_fm, users_db, servers_db
 
 class Scrobble:
     def __init__(self, scrobble):
@@ -88,12 +85,11 @@ async def embedify(scrobbles, ctx): # A function for creating an embed.
 class FM(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-
+    
     @commands.command()
     async def fm(self, ctx):
         await ctx.trigger_typing()
         user = users_db.find_one(user_id=ctx.author.id)
-        server = servers_db.find_one(server_id=ctx.guild.id)
 
         if user is None:
             await ctx.send(f"**Error:** You haven't set a last.fm username yet! Use the `set` command to set your username.")
@@ -106,12 +102,11 @@ class FM(commands.Cog):
 
         # for the reaction functionality you MUST specify emojis within your server in this list, or at least a server that the current instance of the bot is in.
         emojis = [':bigW:659616111414870026', ':bigL:659616123444133888']
+
         reactions = False
 
-        try:
-            reactions = server["reactions"]
-        except Exception as e:
-            raise e
+        if servers_db.find_one(server_id=ctx.guild.id, reactions=True) is not None:
+            reactions = True
         
         if reactions is True:
             for emoji in emojis:
