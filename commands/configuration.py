@@ -34,8 +34,7 @@ def user_check(username): # A check used in different files to see if a user exi
 def return_fm(argument): 
     # A function designed to return a last.fm username based on whether a user uses a mention or a legitimate last.fm username.
     # I put this here because this could be a function very well used in other things, such as getting others' charts/fms, comparing tastes, etc.
-
-    if re.search("^<@![0-9]*>$", argument) is not None: # checking if the user entered something that looks like a mention. honestly i have no idea how to use regex
+    if re.search("^<@[0-9]*>$", argument) != None: # checking if the user entered something that looks like a mention. honestly i have no idea how to use regex
         user_id = ""
         for i in re.findall(r"\d", argument):
             user_id += i
