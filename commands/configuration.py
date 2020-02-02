@@ -12,15 +12,15 @@ def setup(bot):
     bot.add_cog(Configuration(bot))
 
 def get_prefix(bot, message):
-    id = message.guild.id
+    server = servers_db.find_one(server_id=message.guild.id)
 
-    try:
-        result = servers_db.find_one(server_id=id)["prefix"]
-        if result is str:
-            return result
-    except:
-        pass
-
+    if server != None:
+        try:
+            if type(server["prefix"]) is str:
+                return server["prefix"]
+        except:
+            pass
+    
     return DEFAULT_PREFIX
 
 def is_guild_owner():
@@ -101,7 +101,7 @@ class Configuration(commands.Cog):
             return
         
         try:
-            servers_db.upsert(dict(server_id=ctx.guild.id, prefix=args[0]), ["server_id"])
+            servers_db.upsert(dict(server_id=int(ctx.guild.id), prefix=args[0]), ["server_id"])
             await ctx.send(f"The bot's prefix for this server has been successfully set to `{args[0]}`!")
         except:
             await ctx.send(general_error)
