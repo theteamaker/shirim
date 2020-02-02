@@ -28,7 +28,6 @@ _optional arguments:_ <chart type (e.g. weekly, monthly)> <chart size> <-nc> (__
 
 **set_reactions**: can only be used by the server owner. determines whether up/down reactions are put on fm's, like Patrician-Bot does. (__example:__ !set_reactions on)
 
-**set_reactions**
 # Running the Bot
 
 This bot is Docker compatible, and is how my instance runs -- however, it can be built and ran outside of Docker.
