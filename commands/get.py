@@ -1,6 +1,6 @@
 import requests, discord, dataset
 from discord.ext import commands
-from commands.configuration import return_fm
+from commands.configuration import return_fm, servers_db
 from commands.fm import Scrobbles, embedify
 from commands.charts import get_chart
 
@@ -59,4 +59,15 @@ class Get(commands.Cog):
             
             scrobbles = Scrobbles(username=username)
             embed = await embedify(scrobbles, ctx)
-            await ctx.send(embed=embed)
+            msg = await ctx.send(embed=embed)
+
+            emojis = [':bigW:659616111414870026', ':bigL:659616123444133888']
+
+            reactions = False
+
+            if servers_db.find_one(server_id=ctx.guild.id, reactions=True) is not None:
+                reactions = True
+            
+            if reactions is True:
+                for emoji in emojis:
+                    await msg.add_reaction(emoji)
