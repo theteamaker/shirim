@@ -27,6 +27,7 @@ class Get(commands.Cog):
             appropriate_charts = ["weekly", "monthly", "3months", "6months", "yearly", "alltime"]
             appropriate_sizes = ["3x3", "4x4", "5x5", "2x6"]
             
+            print(args[0])
             username = return_fm(args[0])
 
             if username == 404:
