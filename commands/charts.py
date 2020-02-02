@@ -49,8 +49,9 @@ async def parse(context, chart_type, usage, *args, get=False):
     if len(args) >= 1:
         if args[0] in appropriate_sizes:
             size = args[0]
-            if args[1] == "-nc":
-                captions = False
+            if len(args) >= 2:
+                if args[1] == "-nc":
+                    captions = False
 
         elif args[0] == "-nc": # no captions flag
             captions = False
