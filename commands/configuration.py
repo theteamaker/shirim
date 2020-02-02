@@ -14,8 +14,12 @@ def setup(bot):
 def get_prefix(bot, message):
     id = message.guild.id
 
-    if e := servers_db.find_one(server_id=id)["prefix"] != None:
-        return e
+    try:
+        result = servers_db.find_one(server_id=id)["prefix"]
+        if result is str:
+            return result
+    except:
+        pass
 
     return DEFAULT_PREFIX
 
