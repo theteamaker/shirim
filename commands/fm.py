@@ -1,9 +1,7 @@
 import requests, os, dataset, discord, re
 from discord.ext import commands
-from env import LASTFM_API_KEY, USERS_DB
-from commands.configuration import user_check, return_fm
-
-users_db = dataset.connect(USERS_DB)["users"]
+from env import LASTFM_API_KEY, USERS_DB, SERVERS_DB
+from commands.configuration import user_check, return_fm, users_db, servers_db
 
 class Scrobble:
     def __init__(self, scrobble):
@@ -45,86 +43,74 @@ class Scrobbles:
         except:
             return
 
+async def embedify(scrobbles, ctx): # A function for creating an embed.
+    recent = scrobbles.recent_scrobble
+    previous = scrobbles.previous_scrobble
+
+    if ctx.author.color == "#000000":
+        color = "#ffffff"
+    else:
+        color = ctx.author.color
+
+    try: # put in a try/catch block to catch if anyone hasn't scrobbled anything yet.
+        embed = discord.Embed(
+            title=recent.artist,
+            url=recent.url,
+            description=f"{recent.name} [{recent.album}]",
+            color=color # i thought this would be cute
+        )
+    
+    except Exception as e:
+        await ctx.send("**Huh!** You haven't seemed to have scrobbled anything yet!")
+        raise e
+
+    embed.set_author(
+        name=scrobbles.user,
+        url=scrobbles.user_url,
+        icon_url=ctx.message.author.avatar_url,
+    )
+
+    embed.set_thumbnail(url=recent.image)
+
+    try: # if someone really hasn't had a previous scrobble, then just ignore the footer.
+        embed.set_footer(
+            text=f"Previous: {previous.artist} - {previous.name}",
+            icon_url=previous.image,
+        )
+    except Exception as e:
+        raise e
+
+    return embed
+
 class FM(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    async def embedify(self, scrobbles, ctx): # A function for creating an embed.
-        recent = scrobbles.recent_scrobble
-        previous = scrobbles.previous_scrobble
-
-        if ctx.author.color == "#000000":
-            color = "#ffffff"
-        else:
-            color = ctx.author.color
-
-        try: # put in a try/catch block to catch if anyone hasn't scrobbled anything yet.
-            embed = discord.Embed(
-                title=recent.artist,
-                url=recent.url,
-                description=f"{recent.name} [{recent.album}]",
-                color=color # i thought this would be cute
-            )
-        
-        except Exception as e:
-            await ctx.send("**Huh!** You haven't seemed to have scrobbled anything yet!")
-            raise e
-
-        embed.set_author(
-            name=scrobbles.user,
-            url=scrobbles.user_url,
-            icon_url=ctx.message.author.avatar_url,
-        )
-
-        embed.set_thumbnail(url=recent.image)
-
-        try: # if someone really hasn't had a previous scrobble, then just ignore the footer.
-            embed.set_footer(
-                text=f"Previous: {previous.artist} - {previous.name}",
-                icon_url=previous.image,
-            )
-        except Exception as e:
-            raise e
-
-        return embed
-
     @commands.command()
     async def fm(self, ctx):
         await ctx.trigger_typing()
         user = users_db.find_one(user_id=ctx.author.id)
-        
+
         if user is None:
             await ctx.send(f"**Error:** You haven't set a last.fm username yet! Use the `set` command to set your username.")
             return
         
         scrobbles = Scrobbles(username=user["username"])
-        embed = await self.embedify(scrobbles, ctx)
+        embed = await embedify(scrobbles, ctx)
 
-        await ctx.send(embed=embed)
-    
-    @commands.command()
-    async def get(self, ctx, *args):
-        await ctx.trigger_typing()
-        usage = "usage: `get <username/mention>`"
+        msg = await ctx.send(embed=embed)
 
-        if len(args) == 0:
-            await ctx.send(usage)
-            return
+        # for the reaction functionality you MUST specify emojis within your server in this list, or at least a server that the current instance of the bot is in.
+        emojis = [':bigW:659616111414870026', ':bigL:659616123444133888']
+
+        reactions = False
+
+        if servers_db.find_one(server_id=ctx.guild.id, reactions=True) is not None:
+            reactions = True
         
-        username = return_fm(args[0])
-
-        if username == 404:
-            await ctx.send("**Error:** That user doesn't seem to exist. Perhaps you've mistyped their username?")
-            return
-        
-        elif username == 678:
-            await ctx.send(f"**Error:** That user doesn't seem to have set their last.fm username yet.")
-
-        scrobbles = Scrobbles(username=username)
-        embed = await self.embedify(scrobbles, ctx)
-
-        await ctx.send(embed=embed)
-        return
+        if reactions is True:
+            for emoji in emojis:
+                await msg.add_reaction(emoji)
 
 def setup(bot):
     bot.add_cog(FM(bot))

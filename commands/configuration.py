@@ -5,7 +5,7 @@ from env import USERS_DB, SERVERS_DB, LASTFM_API_KEY
 users_db = dataset.connect(USERS_DB)["users"]
 servers_db = dataset.connect(SERVERS_DB)["servers"]
 
-DEFAULT_PREFIX = "::"
+DEFAULT_PREFIX = "!"
 general_error = "Something went wrong! Feel free to submit an issue at https://github.com/theteamaker/shirim."
 
 def setup(bot):
@@ -14,10 +14,10 @@ def setup(bot):
 def get_prefix(bot, message):
     id = message.guild.id
 
-    try:
-        return servers_db.find_one(server_id=id)["prefix"]
-    except:
-        return DEFAULT_PREFIX
+    if e := servers_db.find_one(server_id=id)["prefix"] != None:
+        return e
+
+    return DEFAULT_PREFIX
 
 def is_guild_owner():
     def predicate(ctx):
@@ -101,3 +101,30 @@ class Configuration(commands.Cog):
             await ctx.send(f"The bot's prefix for this server has been successfully set to `{args[0]}`!")
         except:
             await ctx.send(general_error)
+    
+    @commands.command()
+    @commands.check(is_guild_owner())
+    async def set_reactions(self, ctx, *args):
+        await ctx.trigger_typing()
+        usage = "usage: `reactions on | off`"
+
+        if len(args) == 0:
+            await ctx.send(usage)
+            return
+        
+        if args[0] != "on" and args[0] != "off":
+            await ctx.send(usage)
+        
+        if args[0].lower() == "on":
+            try:
+                servers_db.upsert(dict(server_id=ctx.guild.id, reactions=True), ["server_id"])
+                await ctx.send("Reactions have now been turned on for this server.")
+            except:
+                await ctx.send(general_error)
+        
+        if args[0].lower() == "off":
+            try:
+                servers_db.upsert(dict(server_id=ctx.guild.id, reactions=False), ["server_id"])
+                await ctx.send("Reactions have now been turned off for this server.")
+            except:
+                await ctx.send(general_error)
