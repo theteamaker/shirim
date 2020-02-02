@@ -14,10 +14,10 @@ def setup(bot):
 def get_prefix(bot, message):
     id = message.guild.id
 
-    try:
-        return servers_db.find_one(server_id=id)["prefix"]
-    except:
-        return DEFAULT_PREFIX
+    if e := servers_db.find_one(server_id=id)["prefix"] != None:
+        return e
+
+    return DEFAULT_PREFIX
 
 def is_guild_owner():
     def predicate(ctx):
