@@ -3,6 +3,7 @@ from discord.ext import commands
 from commands.configuration import return_fm, servers_db
 from commands.fm import Scrobbles, embedify
 from commands.charts import get_chart
+from commands.recent import recent_embed
 
 ### A consistent command for "getting" other users' data. This will hopefully feel consistent.
 ### usage should be as follows: ::get <username/mention> <optional arguments, such as 'fm', 'weekly' etc>
@@ -27,7 +28,6 @@ class Get(commands.Cog):
             appropriate_charts = ["weekly", "monthly", "3months", "6months", "yearly", "alltime"]
             appropriate_sizes = ["3x3", "4x4", "5x5", "2x6"]
             
-            print(args[0])
             username = return_fm(args[0])
 
             if username == 404:
@@ -56,6 +56,10 @@ class Get(commands.Cog):
                         
                     chart = await get_chart(username, chart_type, size=chart_size, nc=captions)
                     await ctx.send(content=ctx.message.author.mention, file=discord.File(fp=chart,filename="chart.png"))
+                    return
+                
+                elif args[1] == "recent":
+                    await ctx.send(embed=recent_embed(username, ctx))
                     return
             
             scrobbles = Scrobbles(username=username)

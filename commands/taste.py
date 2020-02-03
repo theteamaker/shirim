@@ -75,8 +75,6 @@ class CommonArtists:
         u2_scores = [int(i[self.user2]) for i in comparisons]
         
         _fig, ax = plt.subplots()
-
-        # Example data
         y_pos = np.arange(len(labels))
 
         ax.barh(y_pos, u1_scores, height=0.4, align='center', color="#B894FF", label=self.user1)
