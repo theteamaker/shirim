@@ -1,10 +1,8 @@
-import discord, dataset
+import discord, dataset, requests
 from discord.ext import commands
 from commands.fm import Scrobbles, Scrobble
 from commands.configuration import return_fm, users_db
-
-# This is probably the most convoluted function in the bot, and it's also not that useful.
-# I just thought it would be fun to do something with pagination in Discord.
+from env import LASTFM_API_KEY
 
 def setup(bot):
     bot.add_cog(Recent(bot))
@@ -41,9 +39,20 @@ def recent_embed(username, ctx, get=False):
     color=color
     )
 
-    if get is False:
+    headers = {"User-Agent": "shirim-skiffskiffles"}
+    query_params = {
+        "method": "user.getInfo",
+        "api_key": LASTFM_API_KEY,
+        "user": username,
+        "format": "json"}
+    
+    url = "http://ws.audioscrobbler.com/2.0/"
+    user = requests.get(url=url, headers=headers, params=query_params).json()
+    image = user["user"]["image"][3]["#text"].replace(".png", ".gif")
+
+    if image != "":
         try:
-            embed.set_thumbnail(url=ctx.author.avatar_url)
+            embed.set_thumbnail(url=image)
         except:
             pass
 

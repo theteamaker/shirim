@@ -1,7 +1,7 @@
 import requests, os, dataset, discord, re
 from discord.ext import commands
 from env import LASTFM_API_KEY, USERS_DB, SERVERS_DB
-from commands.configuration import user_check, return_fm, users_db, servers_db
+from commands.configuration import user_check, return_fm, users_db, servers_db, get_avatar
 
 class Scrobble:
     def __init__(self, scrobble):
@@ -63,13 +63,22 @@ async def embedify(scrobbles, ctx): # A function for creating an embed.
     except Exception as e:
         await ctx.send("**Huh!** You haven't seemed to have scrobbled anything yet!")
         raise e
-
-    embed.set_author(
-        name=scrobbles.user,
-        url=scrobbles.user_url,
-        icon_url=ctx.message.author.avatar_url,
-    )
-
+    
+    avatar = get_avatar(scrobbles.user)
+    
+    if avatar != "":
+        embed.set_author(
+            name=scrobbles.user,
+            url=scrobbles.user_url,
+            icon_url=get_avatar(scrobbles.user),
+        )
+    else:
+        embed.set_author(
+            name=scrobbles.user,
+            url=scrobbles.user_url,
+            icon_url=ctx.message.author.avatar_url,
+        )
+    
     embed.set_thumbnail(url=recent.image)
 
     try: # if someone really hasn't had a previous scrobble, then just ignore the footer.
