@@ -59,7 +59,7 @@ class Get(commands.Cog):
                     return
                 
                 elif args[1] == "recent":
-                    await ctx.send(embed=recent_embed(username, ctx))
+                    await ctx.send(embed=recent_embed(username, ctx, get=True))
                     return
             
             scrobbles = Scrobbles(username=username)

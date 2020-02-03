@@ -9,7 +9,7 @@ from commands.configuration import return_fm, users_db
 def setup(bot):
     bot.add_cog(Recent(bot))
 
-def recent_embed(username, ctx):
+def recent_embed(username, ctx, get=False):
     limit = 10
     scrobbler = Scrobbles(username, limit=limit)
     scrobbles = scrobbler.scrobbles
@@ -41,10 +41,11 @@ def recent_embed(username, ctx):
     color=color
     )
 
-    try:
-        embed.set_thumbnail(url=ctx.author.avatar_url)
-    except:
-        pass
+    if get is False:
+        try:
+            embed.set_thumbnail(url=ctx.author.avatar_url)
+        except:
+            pass
 
     embed.set_author(
         name=f"last.fm",
