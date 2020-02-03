@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3-slim-buster
 
 COPY *.py /app/
 COPY requirements.txt /app/
@@ -11,7 +11,7 @@ RUN mkdir /app/data
 
 WORKDIR /app
 
-RUN pip3 install --upgrade pip
-RUN pip3 install --default-timeout=100 -r requirements.txt
+RUN pip install --upgrade pip
+RUN pip install --default-timeout=100 -r requirements.txt
 
 CMD python main.py
