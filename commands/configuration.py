@@ -23,6 +23,20 @@ def get_prefix(bot, message):
     
     return DEFAULT_PREFIX
 
+def get_avatar(username): # this will be replaced by a user class later
+    headers = {"User-Agent": "shirim-skiffskiffles"}
+    query_params = {
+        "method": "user.getInfo",
+        "api_key": LASTFM_API_KEY,
+        "user": username,
+        "format": "json"}
+    
+    url = "http://ws.audioscrobbler.com/2.0/"
+    user = requests.get(url=url, headers=headers, params=query_params).json()
+    image = user["user"]["image"][3]["#text"].replace(".png", ".gif")
+
+    return image
+
 def is_guild_owner():
     def predicate(ctx):
         return ctx.guild is not None and ctx.guild.owner_id == ctx.author.id
