@@ -1,4 +1,6 @@
-FROM python:3
+FROM python:3-slim-buster
+
+RUN apt update && apt install gcc -y
 
 COPY *.py /app/
 COPY requirements.txt /app/
@@ -11,7 +13,6 @@ RUN mkdir /app/data
 
 WORKDIR /app
 
-RUN pip3 install --upgrade pip
-RUN pip3 install --default-timeout=100 -r requirements.txt
+RUN pip install -r requirements.txt && apt remove gcc -y && apt autoremove -y
 
 CMD python main.py
