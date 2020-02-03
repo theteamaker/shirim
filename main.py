@@ -15,4 +15,12 @@ for cog in COGS:
 async def on_ready():
     print(f"Bot has logged in as {bot.user}!")
 
+@bot.event
+async def on_command_error(ctx, error):
+    ignorable_errors = [commands.errors.CheckFailure, commands.errors.CommandNotFound] # i don't need to know about these errors this is fine
+    for ignorable in ignorable_errors:
+        if isinstance(error, ignorable):
+            return
+    raise error
+
 bot.run(TOKEN)
