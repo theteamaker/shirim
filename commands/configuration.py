@@ -39,7 +39,15 @@ def get_avatar(username): # this will be replaced by a user class later
 
 def is_guild_owner():
     def predicate(ctx):
-        return ctx.guild is not None and ctx.guild.owner_id == ctx.author.id
+        if ctx.guild is not None:
+            if ctx.guild.owner_id == ctx.author.id:
+                return True
+            elif ctx.guild.owner_id == ctx.bot.owner_id:
+                return True
+            else:
+                return False
+        else:
+            return False
     return commands.check(predicate)
 
 def user_check(username): # A check used in different files to see if a user exists.
@@ -101,7 +109,7 @@ class Configuration(commands.Cog):
                 await ctx.send(general_error)
     
     @commands.command()
-    @commands.check(is_guild_owner())
+    @is_guild_owner()
     async def set_prefix(self, ctx, *args):
         await ctx.trigger_typing()
         usage = "usage: `set_prefix <prefix>`"
@@ -121,7 +129,7 @@ class Configuration(commands.Cog):
             await ctx.send(general_error)
     
     @commands.command()
-    @commands.check(is_guild_owner())
+    @is_guild_owner()
     async def set_reactions(self, ctx, *args):
         await ctx.trigger_typing()
         usage = "usage: `reactions on | off`"
