@@ -6,8 +6,11 @@ services:
     environment:
       - TOKEN=<secret>
       - LASTFM_API_KEY=<secret>
+      - YOUTUBE_API_KEY=<secret>
       - USERS_DB=sqlite:///data/users.db
       - SERVERS_DB=sqlite:///data/servers.db
+      - YOUTUBE_API_KEY=<secret>
+    
     volumes:
       - shirim_data:/app/data
     

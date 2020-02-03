@@ -16,9 +16,13 @@ To **invite** the bot to your server, click [here](https://discordapp.com/api/oa
 
 _optional arguments:_ <chart size: 3x3, 4x4, 5x5, 2x6> <-nc> (-nc generates a chart without captions over the album covers)
 
+**recent**: fetches your most recent 10 scrobbles.
+
+**fmyt**: fetches your current scrobble as the first video in a youtube search result. searches may return albums as opposed to tracks, unfortunately.
+
 **get**: fetches someone else's data. has optional arguments. (__example:__ !get <username/discord mention>)
 
-_optional arguments:_ <chart type (e.g. weekly, monthly)> <chart size> <-nc> (__example:__ !get evatwin weekly 4x4 -nc)
+_optional arguments:_ <chart type (e.g. weekly, monthly)> <chart size> <-nc>, yt, recent (__examples:__ !get evatwin weekly 4x4 -nc, !get evatwin recent)
 
 **taste**: compares your listening habits to another person's. (__example:__ !taste <username/discord mention>)
 
@@ -35,8 +39,8 @@ This bot is Docker compatible, and is how my instance runs -- however, it can be
 **Requirements**
 
 * All packages specified in requirements.txt (discord.py, matplotlib, etc.) (use `pip install -r requirements.txt`).
-* 2 SQL Databases. One for user settings, and one for server settings.
-* Last.FM API Key. Can be obtained pretty easily, see [here](https://last.fm/api).
-* Discord Bot Token. Can also be obtained pretty easily, see [here](https://discordapp.com/developers).
+* 2 SQL Databases - one for user settings, and one for server settings.
+* Last.FM API Key - can be obtained pretty easily, see [here](https://last.fm/api).
+* Discord Bot Token - can also be obtained pretty easily, see [here](https://discordapp.com/developers).
 
-If you plan to run this using Docker, I would advise *not* using Docker's Alpine image, as it seems to crash upon attempting to install **matplotlib**.
+If you plan to run this using Docker, I would advise using Docker's Slim Buster image.
