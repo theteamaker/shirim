@@ -1,7 +1,7 @@
 import requests, discord, dataset
 from discord.ext import commands
 from commands.configuration import return_fm, servers_db
-from commands.fm import Scrobbles, embedify
+from commands.fm import Scrobbles, embedify, fmyt
 from commands.charts import get_chart
 from commands.recent import recent_embed
 
@@ -61,7 +61,11 @@ class Get(commands.Cog):
                 elif args[1] == "recent":
                     await ctx.send(embed=recent_embed(username, ctx, get=True))
                     return
-            
+
+                elif args[1] == "yt":
+                    await ctx.send(fmyt(Scrobbles(username).recent_scrobble))
+                    return
+
             scrobbles = Scrobbles(username=username)
             embed = await embedify(scrobbles, ctx)
             msg = await ctx.send(embed=embed)

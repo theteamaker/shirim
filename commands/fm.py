@@ -1,6 +1,6 @@
 import requests, os, dataset, discord, re
 from discord.ext import commands
-from env import LASTFM_API_KEY, USERS_DB, SERVERS_DB
+from env import LASTFM_API_KEY, USERS_DB, SERVERS_DB, YOUTUBE_API_KEY
 from commands.configuration import user_check, return_fm, users_db, servers_db, get_avatar
 
 class Scrobble:
@@ -42,6 +42,26 @@ class Scrobbles:
             self.previous_scrobble = Scrobble(self.scrobbles["recenttracks"]["track"][1])
         except:
             return
+
+def fmyt(recent_scrobble):
+
+    search_link = "https://www.googleapis.com/youtube/v3/search"
+    scrobble = f"{recent_scrobble.name} - {recent_scrobble.artist}"
+    query = scrobble.replace(" ", "+")
+    query_params = {
+        "key": YOUTUBE_API_KEY,
+        "part": "snippet",
+        "q": query,
+        "maxResults": "1",
+        "type": "video"
+    }
+
+    request = requests.get(url=search_link, params=query_params).json()
+    
+    try:
+        return f"https://www.youtube.com/watch?v={request['items'][0]['id']['videoId']}"
+    except:
+        return f"**Error:** No search results were found for {scrobble}."
 
 async def embedify(scrobbles, ctx): # A function for creating an embed.
     recent = scrobbles.recent_scrobble
@@ -120,6 +140,19 @@ class FM(commands.Cog):
         if reactions is True:
             for emoji in emojis:
                 await msg.add_reaction(emoji)
+    
+    @commands.command()
+    async def fmyt(self, ctx):
+        await ctx.trigger_typing()
+        user = users_db.find_one(user_id=ctx.author.id)
+
+        if user is None:
+            await ctx.send(f"**Error:** You haven't set a last.fm username yet! Use the `set` command to set your username.")
+            return
+        
+        scrobbles = Scrobbles(username=user["username"])
+
+        await ctx.send(fmyt(scrobbles.recent_scrobble))
 
 def setup(bot):
     bot.add_cog(FM(bot))
