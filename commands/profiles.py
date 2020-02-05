@@ -27,9 +27,6 @@ async def profiler(ctx, member, get=False):
     await ctx.trigger_typing()
     user = users_db.find_one(user_id=member.id)
 
-    if user is None:
-        return
-
     try:
         lastfm = user["username"]
     except:
@@ -71,7 +68,8 @@ async def profiler(ctx, member, get=False):
         )
     except:
         pass
-    return embed
+
+    await ctx.send(embed=embed)
 
 class PersonalChart(commands.Cog):
     def __init__(self, bot):
