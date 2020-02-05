@@ -42,7 +42,7 @@ async def profiler(ctx, member, get=False):
     recent_scrobble = f"{scrobbles.recent_scrobble.name} - {scrobbles.recent_scrobble.artist}"
     playcount = userobj.playcount
     embed = discord.Embed(
-        title=f"{ctx.author.name}#{ctx.author.discriminator}",
+        title=f"{member.name}#{member.discriminator}",
         description=f"Total Scrobbles: **{playcount}**",
     )
     embed.set_thumbnail(url=ctx.message.author.avatar_url)
@@ -56,16 +56,18 @@ async def profiler(ctx, member, get=False):
     )
     try:
         rym = user["rym"]
-        embed.add_field(
-            name="RateYourMusic", value=f"https://rateyourmusic.com/~{rym}", inline=False
-        )
+        if rym is not None:
+            embed.add_field(
+                name="RateYourMusic", value=f"https://rateyourmusic.com/~{rym}", inline=False
+            )
     except:
         pass
     try:
         spotify = user["spotify"]
-        embed.add_field(
-            name="Spotify", value=f"https://open.spotify.com/user/{spotify}", inline=False
-        )
+        if spotify is not None:
+            embed.add_field(
+                name="Spotify", value=f"https://open.spotify.com/user/{spotify}", inline=False
+            )
     except:
         pass
 
