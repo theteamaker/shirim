@@ -22,9 +22,23 @@ _optional arguments:_ <chart size: 3x3, 4x4, 5x5, 2x6> <-nc> (-nc generates a ch
 
 **get**: fetches someone else's data. has optional arguments. (__example:__ !get <username/discord mention>)
 
-_optional arguments:_ <chart type (e.g. weekly, monthly)> <chart size> <-nc>, yt, recent (__examples:__ !get evatwin weekly 4x4 -nc, !get evatwin recent)
+_optional arguments:_ <chart type (e.g. weekly, monthly)> <chart size> <-nc>, yt, recent, chart, profile (__examples:__ !get evatwin weekly 4x4 -nc, !get evatwin recent)
 
 **taste**: compares your listening habits to another person's. (__example:__ !taste <username/discord mention>)
+
+# Profiles Functionality
+
+This is something currently in beta testing. Currently, the related profiling commands are:
+
+**chart**: Displays a chart you set using the **submit** command. (__example:__ !chart)
+  
+**submit**: Submit a chart to pull later using the **chart** command. (__example:__ !submit <chart link or username>)
+
+**setrym**: Set your RYM username.
+
+**setspotify**: Set your Spotify username.
+
+**profile**: Displays a profile containing data from your last.fm, and links to your RYM and Spotify, if you've set them.
 
 # Configuration
 
