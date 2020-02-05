@@ -1,7 +1,7 @@
 import discord, dataset, requests
 from discord.ext import commands
 from commands.fm import Scrobbles, Scrobble
-from commands.configuration import return_fm, users_db
+from commands.configuration import return_fm, users_db, FMUser
 from env import LASTFM_API_KEY
 
 def setup(bot):
@@ -39,20 +39,11 @@ def recent_embed(username, ctx, get=False):
     color=color
     )
 
-    headers = {"User-Agent": "shirim-skiffskiffles"}
-    query_params = {
-        "method": "user.getInfo",
-        "api_key": LASTFM_API_KEY,
-        "user": username,
-        "format": "json"}
-    
-    url = "http://ws.audioscrobbler.com/2.0/"
-    user = requests.get(url=url, headers=headers, params=query_params).json()
-    image = user["user"]["image"][3]["#text"].replace(".png", ".gif")
+    user = FMUser(username)
 
-    if image != "":
+    if user.avatar != "":
         try:
-            embed.set_thumbnail(url=image)
+            embed.set_thumbnail(url=user.avatar)
         except:
             pass
 
