@@ -158,5 +158,4 @@ class PersonalChart(commands.Cog):
     
     @commands.command()
     async def profile(self, ctx):
-        profile = await profiler(ctx, ctx.author)
-        await ctx.send(content=ctx.author.mention, embed=profile)
+        await profiler(ctx, ctx.author)
