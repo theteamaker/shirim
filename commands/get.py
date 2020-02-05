@@ -32,7 +32,7 @@ class Get(commands.Cog):
             username = return_fm(args[0])
             
             if username != 404 and username != 678:
-                if len(args) >= 2 and args[1] != "chart":
+                if len(args) >= 2:
                     if args[1] in appropriate_charts:
                         chart_type = args[1]
                         chart_size = "3x3" #default
@@ -61,6 +61,20 @@ class Get(commands.Cog):
                         await ctx.send(fmyt(Scrobbles(username).recent_scrobble))
                         return
 
+                    elif args[1] == "chart":
+                        await charter(ctx, ctx.message.mentions[0].id, get=True)
+                        return
+
+                    elif args[1] == "profile":
+                        profile = await profiler(ctx, ctx.message.mentions[0], get=True)
+                        
+                        if profile is None:
+                            await ctx.send("It seems that user doesn't have enough data to generate their profile.")
+                            return
+
+                        await ctx.send(embed=profile)
+                        return
+                    
                 scrobbles = Scrobbles(username=username)
                 embed = await embedify(scrobbles, ctx)
                 msg = await ctx.send(embed=embed)
@@ -84,15 +98,3 @@ class Get(commands.Cog):
             elif username == 678 and len(args) == 1 or username == 404 and len(args) >= 2 and args[1] != "chart" and args[1] != "profile":
                 await ctx.send(f"**Error:** That user doesn't seem to have set their last.fm username yet.")
                 return
-            
-            if len(args) >= 2 and args[1] == "chart":
-                await charter(ctx, ctx.message.mentions[0].id, get=True)
-            
-            elif len(args) >= 2 and args[1] == "profile":
-                profile = await profiler(ctx, ctx.message.mentions[0], get=True)
-                
-                if profile is None:
-                    await ctx.send("It seems that user doesn't have enough data to generate their profile.")
-                    return
-
-                await ctx.send(embed=profile)

@@ -124,10 +124,10 @@ class PersonalChart(commands.Cog):
         try:
             users_db.upsert(dict(user_id=ctx.author.id, chart_url=""), ["user_id"])
             await ctx.send("Your chart has been successfully removed.")
-        except Exception as e:
+        except:
             await ctx.send(general_error)
             return
-    
+            
     @commands.command()
     async def setrym(self, ctx, *args):
         await ctx.trigger_typing()
