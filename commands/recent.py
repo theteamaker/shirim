@@ -40,12 +40,12 @@ def recent_embed(username, ctx, get=False):
     )
 
     user = FMUser(username)
+    avatar = user.avatar
 
-    if user.avatar != "":
-        try:
-            embed.set_thumbnail(url=user.avatar)
-        except:
-            pass
+    if avatar == "":
+        avatar = ctx.author.avatar_url
+
+    embed.set_thumbnail(url=avatar)
 
     embed.set_author(
         name=f"last.fm",
