@@ -38,7 +38,11 @@ async def profiler(ctx, member, get=False):
 
     scrobbles = Scrobbles(lastfm)
     userobj = FMUser(lastfm)
+    avatar = userobj.avatar
 
+    if avatar == "":
+        avatar = member.avatar_url
+    
     recent_scrobble = f"{scrobbles.recent_scrobble.name} - {scrobbles.recent_scrobble.artist}"
     playcount = userobj.playcount
     embed = discord.Embed(
@@ -47,11 +51,12 @@ async def profiler(ctx, member, get=False):
     )
     embed.set_thumbnail(url=member.avatar_url)
     embed.set_footer(
-        text=f"Recently Played: {recent_scrobble}" # my silly little scapegoat for my bad coding
+        text=f"Recently Played: {recent_scrobble}",
+        icon_url=scrobbles.recent_scrobble.image,
     )
     embed.set_author(
         name=f"last.fm",
-        icon_url=userobj.avatar,
+        icon_url=avatar,
         url=scrobbles.user_url
     )
     try:
