@@ -108,10 +108,10 @@ class PersonalChart(commands.Cog):
                 users_db.upsert(dict(user_id=ctx.author.id, chart_url=args[0]), ["user_id"])
                 await ctx.send("Your chart has been successfully added! You may call it using `chart`.")
 
-            except Exception as e:
+            except:
                 await ctx.send("**Error:** The specified URL doesn't seem to be an image.")
-                raise e
-    
+                return
+
     @commands.command(name="chart")
     async def get_chart(self, ctx):
         await charter(ctx, ctx.author.id, get=False)
