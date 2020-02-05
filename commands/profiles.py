@@ -45,7 +45,7 @@ async def profiler(ctx, member, get=False):
         title=f"{member.name}#{member.discriminator}",
         description=f"Total Scrobbles: **{playcount}**",
     )
-    embed.set_thumbnail(url=ctx.message.author.avatar_url)
+    embed.set_thumbnail(url=member.avatar_url)
     embed.set_footer(
         text=f"Recently Played: {recent_scrobble}" # my silly little scapegoat for my bad coding
     )
