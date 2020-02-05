@@ -57,7 +57,7 @@ async def profiler(ctx, member, get=False):
     try:
         rym = user["rym"]
         embed.add_field(
-            name="RateYourMusic", value=f"https://rateyourmusic.com/{rym}", inline=False
+            name="RateYourMusic", value=f"https://rateyourmusic.com/~{rym}", inline=False
         )
     except:
         pass
