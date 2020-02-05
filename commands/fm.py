@@ -1,7 +1,7 @@
 import requests, os, dataset, discord, re
 from discord.ext import commands
 from env import LASTFM_API_KEY, USERS_DB, SERVERS_DB, YOUTUBE_API_KEY
-from commands.configuration import user_check, return_fm, users_db, servers_db, get_avatar
+from commands.configuration import user_check, return_fm, users_db, servers_db, FMUser
 
 class Scrobble:
     def __init__(self, scrobble):
@@ -84,13 +84,13 @@ async def embedify(scrobbles, ctx): # A function for creating an embed.
         await ctx.send("**Huh!** You haven't seemed to have scrobbled anything yet!")
         raise e
     
-    avatar = get_avatar(scrobbles.user)
+    user = FMUser(scrobbles.user)
     
-    if avatar != "":
+    if user.avatar != "":
         embed.set_author(
             name=scrobbles.user,
             url=scrobbles.user_url,
-            icon_url=get_avatar(scrobbles.user),
+            icon_url=user.avatar
         )
     else:
         embed.set_author(
