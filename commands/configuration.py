@@ -112,6 +112,7 @@ class Configuration(commands.Cog):
                 await ctx.send(general_error)
     
     @commands.command()
+    @is_guild_owner()
     async def set_prefix(self, ctx, *args):
         await ctx.trigger_typing()
         usage = "usage: `set_prefix <prefix>`"
