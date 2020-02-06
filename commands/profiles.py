@@ -45,9 +45,12 @@ async def profiler(ctx, member, get=False):
     
     recent_scrobble = f"{scrobbles.recent_scrobble.name} - {scrobbles.recent_scrobble.artist}"
     playcount = userobj.playcount
+    color = ctx.author.color
+    
     embed = discord.Embed(
         title=f"{member.name}#{member.discriminator}",
         description=f"Total Scrobbles: **{playcount}**",
+        color=color # i thought this would be cute
     )
     embed.set_thumbnail(url=member.avatar_url)
     embed.set_footer(
