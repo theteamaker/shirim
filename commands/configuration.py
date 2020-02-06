@@ -41,11 +41,12 @@ class FMUser:
         self.playcount = user["user"]["playcount"]
 
 def is_guild_owner():
-    def predicate(ctx):
+    async def predicate(ctx):
+        is_owner = await ctx.bot.is_owner(ctx.author)
         if ctx.guild is not None:
             if ctx.guild.owner_id == ctx.author.id:
                 return True
-            elif ctx.author.id == ctx.bot.owner_id:
+            elif is_owner:
                 return True
             else:
                 return False
