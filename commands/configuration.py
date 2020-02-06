@@ -40,34 +40,6 @@ class FMUser:
         self.avatar = user["user"]["image"][3]["#text"].replace(".png", ".gif")
         self.playcount = user["user"]["playcount"]
 
-# def get_user(username): # this will be replaced by a user class later
-#     headers = {"User-Agent": "shirim-skiffskiffles"}
-#     query_params = {
-#         "method": "user.getInfo",
-#         "api_key": LASTFM_API_KEY,
-#         "user": username,
-#         "format": "json"}
-    
-#     url = "http://ws.audioscrobbler.com/2.0/"
-#     user = requests.get(url=url, headers=headers, params=query_params).json()
-#     image = user["user"]["image"][3]["#text"].replace(".png", ".gif")
-
-#     return user["user"]
-
-# def get_playcount(username):
-#     headers = {"User-Agent": "shirim-skiffskiffles"}
-#     query_params = {
-#         "method": "user.getInfo",
-#         "api_key": LASTFM_API_KEY,
-#         "user": username,
-#         "format": "json"}
-    
-#     url = "http://ws.audioscrobbler.com/2.0/"
-#     user = requests.get(url=url, headers=headers, params=query_params).json()
-#     playcount = user["user"]["playcount"]
-
-#     return playcount
-
 def is_guild_owner():
     def predicate(ctx):
         if ctx.guild is not None:
