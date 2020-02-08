@@ -115,7 +115,7 @@ class FM(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    @commands.command()
+    @commands.command(aliases=["fm", "frequencymodulation"])
     async def fm(self, ctx):
         await ctx.trigger_typing()
         user = users_db.find_one(user_id=ctx.author.id)
