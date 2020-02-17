@@ -20,6 +20,8 @@ _optional arguments:_ <chart size: 3x3, 4x4, 5x5, 2x6> <-nc> (-nc generates a ch
 
 **fmyt**: fetches your current scrobble as the first video in a youtube search result. searches may return albums as opposed to tracks, unfortunately.
 
+**yt**: fetch the first result of a youtube search with given search term(s). (__example:__ !yt xtal aphex twin)
+
 **get**: fetches someone else's data. has optional arguments. (__example:__ !get <username/discord mention>)
 
 _optional arguments:_ <chart type (e.g. weekly, monthly)> <chart size> <-nc>, yt, recent, chart, profile (__examples:__ !get evatwin weekly 4x4 -nc, !get evatwin recent)
