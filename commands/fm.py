@@ -61,7 +61,7 @@ def fmyt(recent_scrobble):
     try:
         return f"https://www.youtube.com/watch?v={request['items'][0]['id']['videoId']}"
     except:
-        return f"**Error:** No search results were found for {scrobble}."
+        return f"**Error:** No search results were found for `{scrobble}`."
 
 async def embedify(scrobbles, ctx): # A function for creating an embed.
     recent = scrobbles.recent_scrobble
@@ -153,6 +153,26 @@ class FM(commands.Cog):
         scrobbles = Scrobbles(username=user["username"])
 
         await ctx.send(fmyt(scrobbles.recent_scrobble))
+    
+    @commands.command()
+    async def yt(self, ctx, *, arg):
+        await ctx.trigger_typing()
+        search_link = "https://www.googleapis.com/youtube/v3/search"
+        query = arg.replace(" ", "+")
+        query_params = {
+            "key": YOUTUBE_API_KEY,
+            "part": "snippet",
+            "q": query,
+            "maxResults": "1",
+            "type": "video"
+        }
+
+        request = requests.get(url=search_link, params=query_params).json()
+
+        try:
+            await ctx.send(f"https://www.youtube.com/watch?v={request['items'][0]['id']['videoId']}")
+        except:
+            await ctx.send(f"**Error:** No search results were found for `{arg}`.")
 
 def setup(bot):
     bot.add_cog(FM(bot))
