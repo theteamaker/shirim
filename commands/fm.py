@@ -130,7 +130,7 @@ class FM(commands.Cog):
         msg = await ctx.send(embed=embed)
 
         # for the reaction functionality you MUST specify emojis within your server in this list, or at least a server that the current instance of the bot is in.
-        emojis = [':bigW:659616111414870026', ':bigL:659616123444133888']
+        emojis = [':bigW:682714792762277908', ':bigL:682714792808808512']
 
         reactions = False
 
