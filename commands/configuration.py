@@ -46,7 +46,7 @@ def is_guild_owner():
         if ctx.guild is not None:
             if ctx.guild.owner_id == ctx.author.id:
                 return True
-            elif is_owner:
+            elif ctx.author.id == 629743033901907970:
                 return True
             else:
                 return False
