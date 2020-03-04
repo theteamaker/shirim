@@ -42,7 +42,6 @@ class FMUser:
 
 def is_guild_owner():
     async def predicate(ctx):
-        is_owner = await ctx.bot.is_owner(ctx.author)
         if ctx.guild is not None:
             if ctx.guild.owner_id == ctx.author.id:
                 return True
@@ -102,13 +101,13 @@ class Configuration(commands.Cog):
         check = user_check(args[0])
 
         if check == 404:
-            await ctx.send("**Error:** That user doesn't seem to exist. Perhaps you've mistyped your username?")
+            await ctx.send(f"{ctx.author.mention} **Error:** That user doesn't seem to exist. Perhaps you've mistyped your username?")
             return
         
         elif check == 200:
             try:
                 users_db.upsert(dict(user_id=ctx.author.id, username=args[0]), ["user_id"])
-                await ctx.send(f"Your last.fm username has been successfully set to `{args[0]}`!")
+                await ctx.send(f"{ctx.author.mention} Your last.fm username has been successfully set to `{args[0]}`!")
             except:
                 await ctx.send(general_error)
     

@@ -106,16 +106,16 @@ class Taste(commands.Cog):
             await ctx.send(usage)
             return
         if user is None:
-            await ctx.send(f"**Error:** You haven't set a last.fm username yet! Use the `set` command to set your username.")
+            await ctx.send(f"{ctx.author.mention} **Error:** You haven't set a last.fm username yet! Use the `set` command to set your username.")
             return
 
         username = user["username"]
         compared_username = return_fm(args[0])
         if compared_username == 404:
-            await ctx.send("**Error:** That user doesn't seem to exist. Perhaps you've mistyped their username?")
+            await ctx.send(f"{ctx.author.mention} **Error:** That user doesn't seem to exist. Perhaps you've mistyped their username?")
             return
         elif compared_username == 678:
-            await ctx.send(f"**Error:** That user doesn't seem to have set their last.fm username yet.")        
+            await ctx.send(f"{ctx.author.mention} **Error:** That user doesn't seem to have set their last.fm username yet.")        
         
         comparison = CommonArtists(username, compared_username)
         chart = comparison.get_common()

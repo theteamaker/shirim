@@ -80,11 +80,11 @@ class Get(commands.Cog):
 
             # look I understand that these if statements look like they came straight out of yandere simulator but they work
             elif username == 404 and len(args) == 1 or username == 404 and len(args) >= 2 and args[1] != "chart" and args[1] != "profile":
-                await ctx.send("**Error:** That user doesn't seem to exist. Perhaps you've mistyped their username?")
+                await ctx.send(f"{ctx.author.mention} **Error:** That user doesn't seem to exist. Perhaps you've mistyped their username?")
                 return
             
             elif username == 678 and len(args) == 1 or username == 678 and len(args) >= 2 and args[1] != "chart" and args[1] != "profile":
-                await ctx.send(f"**Error:** That user doesn't seem to have set their last.fm username yet.")
+                await ctx.send(f"{ctx.author.mention} **Error:** That user doesn't seem to have set their last.fm username yet.")
                 return
             
             if len(args) >= 2 and args[1] == "chart":

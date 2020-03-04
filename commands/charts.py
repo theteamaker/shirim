@@ -61,7 +61,7 @@ async def parse(context, chart_type, usage, *args, get=False):
     
     user = users_db.find_one(user_id=context.author.id)
     if user is None:
-        await context.send(f"**Error:** You haven't set a last.fm username yet! Use the `set` command to set your username.")
+        await context.send(f"{context.author.mention} **Error:** You haven't set a last.fm username yet! Use the `set` command to set your username.")
         return
     
     message_content = context.message.author.mention
