@@ -22,8 +22,8 @@ def recent_embed(username, ctx, get=False):
     for element in scrobbles_list:
         content += f"{element}\n"
     
-    if ctx.author.color == "#000000":
-        color = "#ffffff"
+    if ctx.author.color.value == 0x000000:
+        color = discord.Colour(0x9ebbdb)
     else:
         color = ctx.author.color
     

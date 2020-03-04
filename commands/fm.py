@@ -67,8 +67,8 @@ async def embedify(scrobbles, ctx): # A function for creating an embed.
     recent = scrobbles.recent_scrobble
     previous = scrobbles.previous_scrobble
 
-    if ctx.author.color == "#000000":
-        color = "#ffffff"
+    if ctx.author.color.value == 0x000000:
+        color = discord.Colour(0x9ebbdb)
     else:
         color = ctx.author.color
 
@@ -81,7 +81,7 @@ async def embedify(scrobbles, ctx): # A function for creating an embed.
         )
     
     except Exception as e:
-        await ctx.send("**Huh!** You haven't seemed to have scrobbled anything yet!")
+        await ctx.send(f"{ctx.author.mention} **Huh!** You haven't seemed to have scrobbled anything yet! (or, there was a weird error.)")
         raise e
     
     user = FMUser(scrobbles.user)
@@ -121,7 +121,7 @@ class FM(commands.Cog):
         user = users_db.find_one(user_id=ctx.author.id)
 
         if user is None:
-            await ctx.send(f"**Error:** You haven't set a last.fm username yet! Use the `set` command to set your username.")
+            await ctx.send(f"{ctx.author.mention} **Error:** You haven't set a last.fm username yet! Use the `set` command to set your username.")
             return
         
         scrobbles = Scrobbles(username=user["username"])
@@ -147,7 +147,7 @@ class FM(commands.Cog):
         user = users_db.find_one(user_id=ctx.author.id)
 
         if user is None:
-            await ctx.send(f"**Error:** You haven't set a last.fm username yet! Use the `set` command to set your username.")
+            await ctx.send(f"{ctx.author.mention} **Error:** You haven't set a last.fm username yet! Use the `set` command to set your username.")
             return
         
         scrobbles = Scrobbles(username=user["username"])
@@ -172,7 +172,7 @@ class FM(commands.Cog):
         try:
             await ctx.send(f"https://www.youtube.com/watch?v={request['items'][0]['id']['videoId']}")
         except:
-            await ctx.send(f"**Error:** No search results were found for `{arg}`.")
+            await ctx.send(f"{ctx.author.mention} **Error:** No search results were found for `{arg}`.")
 
 def setup(bot):
     bot.add_cog(FM(bot))

@@ -15,13 +15,18 @@ async def charter(ctx, user_id, get=False):
         if chart_url == "":
             raise Exception
         else:
-            embed = discord.Embed().set_image(url=chart_url)
+            if ctx.author.color.value == 0x000000:
+                color = discord.Colour(0x9ebbdb)
+            else:
+                color = ctx.author.color
+            
+            embed = discord.Embed(color=color).set_image(url=chart_url)
             await ctx.send(content=ctx.author.mention, embed=embed)
     except:
         if get:
-            await ctx.send("**Error:** The specified user doesn't seem to have set a chart.")
+            await ctx.send(f"{ctx.author.mention} **Error:** The specified user doesn't seem to have set a chart.")
             return
-        await ctx.send("**Error:** You haven't seemed to have set a chart. Use the `submit` command to set one.")
+        await ctx.send(f"{ctx.author.mention} **Error:** You haven't seemed to have set a chart. Use the `submit` command to set one.")
 
 async def profiler(ctx, member, get=False):
     await ctx.trigger_typing()
@@ -31,9 +36,9 @@ async def profiler(ctx, member, get=False):
         lastfm = user["username"]
     except:
         if get:
-            await ctx.send("**Error:** It seems this user doesn't have enough data to generate a profile.")
+            await ctx.send(f"{ctx.author.mention} **Error:** It seems this user doesn't have enough data to generate a profile.")
             return
-        await ctx.send("**Error:** It seems you don't have enough data to generate a profile. Use `!set` to set a last.fm name to fix this.")
+        await ctx.send(f"{ctx.author.mention} **Error:** It seems you don't have enough data to generate a profile. Use `!set` to set a last.fm name to fix this.")
         return
 
     scrobbles = Scrobbles(lastfm)
@@ -45,7 +50,11 @@ async def profiler(ctx, member, get=False):
     
     recent_scrobble = f"{scrobbles.recent_scrobble.name} - {scrobbles.recent_scrobble.artist}"
     playcount = userobj.playcount
-    color = ctx.author.color
+    
+    if ctx.author.color.value == 0x000000:
+        color = discord.Colour(0x9ebbdb)
+    else:
+        color = ctx.author.color
     
     embed = discord.Embed(
         title=f"{member.name}#{member.discriminator}",
@@ -96,12 +105,12 @@ class PersonalChart(commands.Cog):
                 return
             
             if ctx.message.attachments[0].height is None:
-                await ctx.send("**Error:** You may only attach an image to submit as a chart!")
-                await ctx.send("Your chart has been successfully added! You may call it using `chart`.")
+                await ctx.send(f"{ctx.author.mention} **Error:** You may only attach an image to submit as a chart!")
+                await ctx.send(f"{ctx.author.mention} Your chart has been successfully added! You may call it using `chart`.")
             
             try:
                 users_db.upsert(dict(user_id=ctx.author.id, chart_url=ctx.message.attachments[0].url), ["user_id"])
-                await ctx.send("Your chart has been successfully added! You may call it using `chart`.")
+                await ctx.send(f"{ctx.author.mention} Your chart has been successfully added! You may call it using `chart`.")
                 return
             except:
                 await ctx.send(general_error)
@@ -112,14 +121,14 @@ class PersonalChart(commands.Cog):
                 request = requests.get(url=args[0])
                 
                 if re.search(r"^(image)", request.headers["Content-Type"]) is None:
-                    print("**Error:** The specified URL doesn't seem to link to an image.")
+                    print(f"{ctx.author.mention} **Error:** The specified URL doesn't seem to link to an image.")
                     return
                 
                 users_db.upsert(dict(user_id=ctx.author.id, chart_url=args[0]), ["user_id"])
-                await ctx.send("Your chart has been successfully added! You may call it using `chart`.")
+                await ctx.send(f"{ctx.author.mention} Your chart has been successfully added! You may call it using `chart`.")
 
             except:
-                await ctx.send("**Error:** The specified URL doesn't seem to be an image.")
+                await ctx.send(f"{ctx.author.mention} **Error:** The specified URL doesn't seem to be an image.")
                 return
 
     @commands.command(name="chart")
@@ -131,7 +140,7 @@ class PersonalChart(commands.Cog):
         await ctx.trigger_typing()
         try:
             users_db.upsert(dict(user_id=ctx.author.id, chart_url=""), ["user_id"])
-            await ctx.send("Your chart has been successfully removed.")
+            await ctx.send(f"{ctx.author.mention} Your chart has been successfully removed.")
         except:
             await ctx.send(general_error)
             return
@@ -147,7 +156,7 @@ class PersonalChart(commands.Cog):
         
         try:
             users_db.upsert(dict(user_id=ctx.author.id, rym=args[0]), ["user_id"])
-            await ctx.send(f"Your RYM username has been successfully set as {args[0]}.")
+            await ctx.send(f"{ctx.author.mention} Your RYM username has been successfully set as {args[0]}.")
         except:
             await ctx.send(general_error)
     
@@ -162,7 +171,7 @@ class PersonalChart(commands.Cog):
 
         try:
             users_db.upsert(dict(user_id=ctx.author.id, spotify=args[0]), ["user_id"])
-            await ctx.send(f"Your Spotify username has been successfully set as {args[0]}.")
+            await ctx.send(f"{ctx.author.mention} Your Spotify username has been successfully set as {args[0]}.")
         except:
             await ctx.send(general_error)
     
