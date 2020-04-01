@@ -102,9 +102,13 @@ async def embedify(scrobbles, ctx): # A function for creating an embed.
     embed.set_thumbnail(url=recent.image)
 
     try: # if someone really hasn't had a previous scrobble, then just ignore the footer.
+
+        # lol dumb april fools thing
+        bling_image = "https://i.ytimg.com/vi/NlFxZTeTsPQ/maxresdefault.jpg"
+
         embed.set_footer(
-            text=f"Previous: {previous.artist} - {previous.name}",
-            icon_url=previous.image,
+            text=f"Previous: Hotline Bling - Drake",
+            icon_url=bling_image,
         )
     except Exception as e:
         raise e
