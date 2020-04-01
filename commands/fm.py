@@ -104,7 +104,7 @@ async def embedify(scrobbles, ctx): # A function for creating an embed.
     try: # if someone really hasn't had a previous scrobble, then just ignore the footer.
 
         # lol dumb april fools thing
-        bling_image = "https://i.ytimg.com/vi/NlFxZTeTsPQ/maxresdefault.jpg"
+        bling_image = "https://img.discogs.com/lWvuQ6qtqVvfzj5NQLT-iyrTXXw=/fit-in/600x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-8672856-1466341679-7427.jpeg.jpg"
 
         embed.set_footer(
             text=f"Previous: Hotline Bling - Drake",
