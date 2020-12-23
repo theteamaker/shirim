@@ -1,4 +1,4 @@
-# Shirim - Eva Twin's last.fm Bot!
+# Shirim - twin's last.fm Bot!
 
 A bot designed to output last.fm data. Designed with a non-committal minimalist philosophy.
 
