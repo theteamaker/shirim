@@ -29,7 +29,7 @@ async def get_chart(username, chart_type, size="3x3", nc=False):
         "type": selected_type
     }
 
-    link = f"http://tapmusic.net/collage.php?user={headers['user']}&type={headers['type']}&size={headers['size']}"
+    link = f"https://tapmusic.net/collage.php?user={headers['user']}&type={headers['type']}&size={headers['size']}"
 
     if nc == True:
         link += "&caption=true"
