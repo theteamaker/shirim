@@ -35,7 +35,7 @@ async def get_chart(username, chart_type, size="3x3", nc=False):
         link += "&caption=true"
 
     async with aiohttp.ClientSession() as session:
-        async with session.get(link) as resp:
+        async with session.get(link, verify_ssl=False) as resp:
             var = await resp.read()
             return io.BytesIO(var)
 
