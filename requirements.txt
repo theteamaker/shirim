@@ -4,7 +4,7 @@ chardet==3.0.4
 dataset==1.4.4
 discord.py==1.6.0
 matplotlib==3.3.3
-numpy==1.19.5
+numpy==1.22.0
 python-dotenv==0.15.0
 requests==2.25.1
 wheel==0.36.2
